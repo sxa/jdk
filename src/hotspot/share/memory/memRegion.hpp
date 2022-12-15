@@ -109,8 +109,14 @@ public:
 
 class MemRegionClosureRO: public MemRegionClosure {
 public:
+  void* operator new(size_t size, ResourceObj::allocation_type type, MEMFLAGS flags) throw() {
+        return ResourceObj::operator new(size, type, flags);
+  }
+  void* operator new(size_t size, Arena *arena) throw() {
+        return ResourceObj::operator new(size, arena);
+  }
   void* operator new(size_t size) throw() {
-    return resource_allocate_bytes(size);
+        return ResourceObj::operator new(size);
   }
 
   void  operator delete(void* p) {} // nothing to do

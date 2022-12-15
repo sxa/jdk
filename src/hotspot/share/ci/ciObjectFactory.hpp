@@ -36,7 +36,7 @@
 // of ciObject and its subclasses.  It contains a caching mechanism
 // which ensures that for each oop, at most one ciObject is created.
 // This invariant allows efficient implementation of ciObject.
-class ciObjectFactory : public ArenaObj {
+class ciObjectFactory : public ResourceObj {
   friend class VMStructs;
   friend class ciEnv;
 
@@ -56,7 +56,7 @@ private:
   int                              _next_ident;
 
 public:
-  struct NonPermObject : public ArenaObj {
+  struct NonPermObject : public ResourceObj {
     ciObject*      _object;
     NonPermObject* _next;
 

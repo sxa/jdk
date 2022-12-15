@@ -91,7 +91,7 @@ class ParallelOldGCInfo {
   void* dense_prefix() const { return _dense_prefix; }
 };
 
-class GCTracer {
+class GCTracer : public ResourceObj {
  protected:
   SharedGCInfo _shared_gc_info;
 
@@ -196,7 +196,7 @@ class ParallelOldTracer : public OldGCTracer {
   void send_parallel_old_event() const;
 };
 
-class SerialOldTracer : public OldGCTracer, public CHeapObj<mtGC> {
+class SerialOldTracer : public OldGCTracer {
  public:
   SerialOldTracer() : OldGCTracer(SerialOld) {}
 };
@@ -206,7 +206,7 @@ class ParallelScavengeTracer : public YoungGCTracer {
   ParallelScavengeTracer() : YoungGCTracer(ParallelScavenge) {}
 };
 
-class DefNewTracer : public YoungGCTracer, public CHeapObj<mtGC> {
+class DefNewTracer : public YoungGCTracer {
  public:
   DefNewTracer() : YoungGCTracer(DefNew) {}
 };

@@ -565,7 +565,9 @@ public:
   bool is_arg_returned(int i) const;
   uint arg_modified(int arg) const;
 
-  ciParametersTypeData* parameters_type_data() const;
+  ciParametersTypeData* parameters_type_data() const {
+    return _parameters != NULL ? new ciParametersTypeData(_parameters) : NULL;
+  }
 
   // Code generation helper
   ByteSize offset_of_slot(ciProfileData* data, ByteSize slot_offset_in_data);

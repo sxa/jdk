@@ -30,7 +30,7 @@ class ZStatCounter;
 class ZStatPhase;
 class ZStatSampler;
 
-class ZTracer : public GCTracer, public CHeapObj<mtGC> {
+class ZTracer : public GCTracer {
 private:
   static ZTracer* _tracer;
 

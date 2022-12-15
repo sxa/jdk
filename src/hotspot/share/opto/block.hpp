@@ -46,7 +46,7 @@ struct Tarjan;
 // Abstractly provides an infinite array of Block*'s, initialized to NULL.
 // Note that the constructor just zeros things, and since I use Arena
 // allocation I do not need a destructor to reclaim storage.
-class Block_Array : public ArenaObj {
+class Block_Array : public ResourceObj {
   friend class VMStructs;
   uint _size;                   // allocated size, as opposed to formal limit
   debug_only(uint _limit;)      // limit to formal domain
@@ -89,7 +89,7 @@ public:
 };
 
 
-class CFGElement : public AnyObj {
+class CFGElement : public ResourceObj {
   friend class VMStructs;
  public:
   double _freq; // Execution frequency (estimate)

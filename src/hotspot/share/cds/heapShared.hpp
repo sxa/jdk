@@ -192,14 +192,14 @@ private:
 
   typedef ResourceHashtable<oop, CachedOopInfo,
       36137, // prime number
-      AnyObj::C_HEAP,
+      ResourceObj::C_HEAP,
       mtClassShared,
       HeapShared::oop_hash> ArchivedObjectCache;
   static ArchivedObjectCache* _archived_object_cache;
 
   typedef ResourceHashtable<oop, oop,
       36137, // prime number
-      AnyObj::C_HEAP,
+      ResourceObj::C_HEAP,
       mtClassShared,
       HeapShared::oop_hash> OriginalObjectTable;
   static OriginalObjectTable* _original_object_table;
@@ -207,7 +207,7 @@ private:
   class DumpTimeKlassSubGraphInfoTable
     : public ResourceHashtable<Klass*, KlassSubGraphInfo,
                                137, // prime number
-                               AnyObj::C_HEAP,
+                               ResourceObj::C_HEAP,
                                mtClassShared,
                                DumpTimeSharedClassTable_hash> {
   public:
@@ -263,7 +263,7 @@ private:
 
   typedef ResourceHashtable<oop, bool,
       15889, // prime number
-      AnyObj::C_HEAP,
+      ResourceObj::C_HEAP,
       mtClassShared,
       HeapShared::oop_hash> SeenObjectsTable;
 
@@ -274,7 +274,7 @@ private:
 
   static void init_seen_objects_table() {
     assert(_seen_objects_table == NULL, "must be");
-    _seen_objects_table = new (mtClass)SeenObjectsTable();
+    _seen_objects_table = new (ResourceObj::C_HEAP, mtClass)SeenObjectsTable();
   }
   static void delete_seen_objects_table() {
     assert(_seen_objects_table != NULL, "must be");
@@ -327,10 +327,10 @@ private:
   static void reset_archived_object_states(TRAPS);
   static void create_archived_object_cache(bool create_orig_table) {
     _archived_object_cache =
-      new (mtClass)ArchivedObjectCache();
+      new (ResourceObj::C_HEAP, mtClass)ArchivedObjectCache();
     if (create_orig_table) {
       _original_object_table =
-        new (mtClass)OriginalObjectTable();
+        new (ResourceObj::C_HEAP, mtClass)OriginalObjectTable();
     } else {
       _original_object_table = NULL;
     }
@@ -436,7 +436,7 @@ private:
 class DumpedInternedStrings :
   public ResourceHashtable<oop, bool,
                            15889, // prime number
-                           AnyObj::C_HEAP,
+                           ResourceObj::C_HEAP,
                            mtClassShared,
                            HeapShared::string_oop_hash>
 {};

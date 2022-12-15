@@ -128,7 +128,7 @@ class ArraycopyNode;
 class ConnectionGraph;
 
 // ConnectionGraph nodes
-class PointsToNode : public ArenaObj {
+class PointsToNode : public ResourceObj {
   GrowableArray<PointsToNode*> _edges; // List of nodes this node points to
   GrowableArray<PointsToNode*> _uses;  // List of nodes which point to this node
 
@@ -317,7 +317,7 @@ public:
 };
 
 
-class ConnectionGraph: public ArenaObj {
+class ConnectionGraph: public ResourceObj {
   friend class PointsToNode; // to access _compile
   friend class FieldNode;
 private:

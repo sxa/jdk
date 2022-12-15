@@ -2142,7 +2142,7 @@ void nmethod::check_all_dependencies(DepChange& changes) {
   NOT_PRODUCT( FlagSetting fs(TraceDependencies, false) );
 
   typedef ResourceHashtable<DependencySignature, int, 11027,
-                            AnyObj::RESOURCE_AREA, mtInternal,
+                            ResourceObj::RESOURCE_AREA, mtInternal,
                             &DependencySignature::hash,
                             &DependencySignature::equals> DepTable;
 

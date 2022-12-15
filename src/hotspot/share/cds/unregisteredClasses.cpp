@@ -75,7 +75,7 @@ InstanceKlass* UnregisteredClasses::load_class(Symbol* name, const char* path, T
 class URLClassLoaderTable : public ResourceHashtable<
   Symbol*, OopHandle,
   137, // prime number
-  AnyObj::C_HEAP> {};
+  ResourceObj::C_HEAP> {};
 
 static URLClassLoaderTable* _url_classloader_table = NULL;
 
@@ -102,7 +102,7 @@ Handle UnregisteredClasses::create_url_classloader(Symbol* path, TRAPS) {
 
 Handle UnregisteredClasses::get_url_classloader(Symbol* path, TRAPS) {
   if (_url_classloader_table == NULL) {
-    _url_classloader_table = new (mtClass)URLClassLoaderTable();
+    _url_classloader_table = new (ResourceObj::C_HEAP, mtClass)URLClassLoaderTable();
   }
   OopHandle* url_classloader_ptr = _url_classloader_table->get(path);
   if (url_classloader_ptr != NULL) {

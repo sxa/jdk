@@ -45,7 +45,7 @@ class ConstantOopWriteValue;
 class LocationValue;
 class ObjectValue;
 
-class ScopeValue: public AnyObj {
+class ScopeValue: public ResourceObj {
  public:
   // Testers
   virtual bool is_location() const { return false; }

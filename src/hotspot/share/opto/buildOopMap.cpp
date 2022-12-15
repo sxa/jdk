@@ -77,7 +77,7 @@
 
 
 // Structure to pass around
-struct OopFlow : public ArenaObj {
+struct OopFlow : public ResourceObj {
   short *_callees;              // Array mapping register to callee-saved
   Node **_defs;                 // array mapping register to reaching def
                                 // or NULL if dead/conflict

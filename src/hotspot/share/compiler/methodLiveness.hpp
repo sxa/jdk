@@ -49,11 +49,11 @@ class MethodLivenessResult : public ResourceBitMap {
   bool is_valid() const { return _is_valid; }
 };
 
-class MethodLiveness : public ArenaObj {
+class MethodLiveness : public ResourceObj {
  public:
   // The BasicBlock class is used to represent a basic block in the
   // liveness analysis.
-  class BasicBlock : public ArenaObj {
+  class BasicBlock : public ResourceObj {
    private:
     // This class is only used by the MethodLiveness class.
     friend class MethodLiveness;

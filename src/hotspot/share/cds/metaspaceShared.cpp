@@ -156,7 +156,7 @@ class DumpClassListCLDClosure : public CLDClosure {
 
   fileStream *_stream;
   ResizeableResourceHashtable<InstanceKlass*, bool,
-                              AnyObj::C_HEAP, mtClassShared> _dumped_classes;
+                              ResourceObj::C_HEAP, mtClassShared> _dumped_classes;
 
   void dump(InstanceKlass* ik) {
     bool created;

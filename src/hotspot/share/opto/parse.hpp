@@ -40,7 +40,7 @@ class SwitchRange;
 
 
 //------------------------------InlineTree-------------------------------------
-class InlineTree : public AnyObj {
+class InlineTree : public ResourceObj {
   friend class VMStructs;
 
   Compile*    C;                  // cache
@@ -268,7 +268,7 @@ class Parse : public GraphKit {
 
 #ifndef PRODUCT
   // BytecodeParseHistogram collects number of bytecodes parsed, nodes constructed, and transformations.
-  class BytecodeParseHistogram : public ArenaObj {
+  class BytecodeParseHistogram : public ResourceObj {
    private:
     enum BPHType {
       BPH_transforms,

@@ -84,7 +84,7 @@ class ConstraintSet {                               // copied into hashtable as 
   ConstraintSet& operator=(const ConstraintSet&) = delete;
 
   void initialize(LoaderConstraint* constraint) {
-    _constraints = new (mtClass) GrowableArray<LoaderConstraint*>(5, mtClass);
+    _constraints = new (ResourceObj::C_HEAP, mtClass) GrowableArray<LoaderConstraint*>(5, mtClass);
     _constraints->push(constraint);
   }
 
@@ -106,7 +106,7 @@ class ConstraintSet {                               // copied into hashtable as 
 };
 
 
-ResourceHashtable<SymbolHandle, ConstraintSet, 107, AnyObj::C_HEAP, mtClass, SymbolHandle::compute_hash> _loader_constraint_table;
+ResourceHashtable<SymbolHandle, ConstraintSet, 107, ResourceObj::C_HEAP, mtClass, SymbolHandle::compute_hash> _loader_constraint_table;
 
 void LoaderConstraint::extend_loader_constraint(Symbol* class_name,
                                                 ClassLoaderData* loader,

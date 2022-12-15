@@ -46,7 +46,7 @@
 // the distinction between `Klass*' and `Klass' are not
 // reflected in the interface and instead the Klass hierarchy
 // is directly modeled as the subclasses of ciKlass.
-class ciBaseObject : public ArenaObj {
+class ciBaseObject : public ResourceObj {
   CI_PACKAGE_ACCESS
   friend class ciEnv;
 

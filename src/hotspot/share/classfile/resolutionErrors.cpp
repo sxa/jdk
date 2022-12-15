@@ -162,3 +162,4 @@ void ResolutionErrorTable::purge_resolution_errors() {
   ResolutionIteratePurgeErrors purgeErrorsIterator;
   _resolution_error_table.unlink(&purgeErrorsIterator);
 }
+

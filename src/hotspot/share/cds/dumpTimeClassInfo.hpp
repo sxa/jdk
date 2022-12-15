@@ -233,7 +233,7 @@ using DumpTimeSharedClassTableBaseType = ResourceHashtable<
   InstanceKlass*,
   DumpTimeClassInfo,
   15889, // prime number
-  AnyObj::C_HEAP,
+  ResourceObj::C_HEAP,
   mtClassShared,
   &DumpTimeSharedClassTable_hash>;
 

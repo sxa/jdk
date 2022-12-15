@@ -32,7 +32,7 @@
 
 class ciBlock;
 
-class ciMethodBlocks : public ArenaObj {
+class ciMethodBlocks : public ResourceObj {
 private:
   ciMethod *_method;
   Arena *_arena;
@@ -60,7 +60,7 @@ public:
 #endif
 };
 
-class ciBlock : public ArenaObj {
+class ciBlock : public ResourceObj {
 private:
   int _idx;
   int _start_bci;

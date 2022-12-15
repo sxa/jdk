@@ -33,7 +33,7 @@
 // The class caches indexed constant pool lookups.
 //
 // Usage note: this klass has nothing to do with ConstantPoolCache*.
-class ciConstantPoolCache : public ArenaObj {
+class ciConstantPoolCache : public ResourceObj {
 private:
   GrowableArray<int>*   _keys;
   GrowableArray<void*>* _elements;

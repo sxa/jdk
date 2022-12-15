@@ -37,7 +37,7 @@ JvmtiRawMonitor::QNode::QNode(Thread* thread) : _next(NULL), _prev(NULL),
 }
 
 GrowableArray<JvmtiRawMonitor*>* JvmtiPendingMonitors::_monitors =
-  new (mtServiceability) GrowableArray<JvmtiRawMonitor*>(1, mtServiceability);
+  new (ResourceObj::C_HEAP, mtServiceability) GrowableArray<JvmtiRawMonitor*>(1, mtServiceability);
 
 void JvmtiPendingMonitors::transition_raw_monitors() {
   assert((Threads::number_of_threads()==1),

@@ -70,7 +70,7 @@ class DepMem;
 // An edge in the dependence graph.  The edges incident to a dependence
 // node are threaded through _next_in for incoming edges and _next_out
 // for outgoing edges.
-class DepEdge : public ArenaObj {
+class DepEdge : public ResourceObj {
  protected:
   DepMem* _pred;
   DepMem* _succ;
@@ -92,7 +92,7 @@ class DepEdge : public ArenaObj {
 //------------------------------DepMem---------------------------
 // A node in the dependence graph.  _in_head starts the threaded list of
 // incoming edges, and _out_head starts the list of outgoing edges.
-class DepMem : public ArenaObj {
+class DepMem : public ResourceObj {
  protected:
   Node*    _node;     // Corresponding ideal node
   DepEdge* _in_head;  // Head of list of in edges, null terminated
@@ -624,7 +624,7 @@ class SuperWord : public ResourceObj {
 
 //------------------------------SWPointer---------------------------
 // Information about an address for dependence checking and vector alignment
-class SWPointer : public ArenaObj {
+class SWPointer : public ResourceObj {
  protected:
   MemNode*   _mem;           // My memory reference node
   SuperWord* _slp;           // SuperWord class

@@ -3112,8 +3112,6 @@ void ciTypeFlow::record_failure(const char* reason) {
 }
 
 #ifndef PRODUCT
-void ciTypeFlow::print() const       { print_on(tty); }
-
 // ------------------------------------------------------------------
 // ciTypeFlow::print_on
 void ciTypeFlow::print_on(outputStream* st) const {

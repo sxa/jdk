@@ -49,7 +49,7 @@ class CDSHeapVerifier : public KlassClosure {
 
   ResourceHashtable<oop, StaticFieldInfo,
       15889, // prime number
-      AnyObj::C_HEAP,
+      ResourceObj::C_HEAP,
       mtClassShared,
       HeapShared::oop_hash> _table;
 
