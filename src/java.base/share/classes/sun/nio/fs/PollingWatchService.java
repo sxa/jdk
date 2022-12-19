@@ -41,6 +41,7 @@ import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 import java.security.PrivilegedActionException;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -51,6 +52,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
 /**
  * Simple WatchService implementation that uses periodic tasks to poll
@@ -224,10 +226,10 @@ class PollingWatchService
      * Entry in directory cache to record file last-modified-time and tick-count
      */
     private static class CacheEntry {
-        private long lastModified;
+        private Instant lastModified;
         private int lastTickCount;
 
-        CacheEntry(long lastModified, int lastTickCount) {
+        CacheEntry(Instant lastModified, int lastTickCount) {
             this.lastModified = lastModified;
             this.lastTickCount = lastTickCount;
         }
@@ -236,11 +238,11 @@ class PollingWatchService
             return lastTickCount;
         }
 
-        long lastModified() {
+        Instant lastModified() {
             return lastModified;
         }
 
-        void update(long lastModified, int tickCount) {
+        void update(Instant lastModified, int tickCount) {
             this.lastModified = lastModified;
             this.lastTickCount = tickCount;
         }
@@ -283,8 +285,7 @@ class PollingWatchService
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
                 for (Path entry: stream) {
                     // don't follow links
-                    long lastModified =
-                        Files.getLastModifiedTime(entry, LinkOption.NOFOLLOW_LINKS).toMillis();
+                    Instant lastModified = Files.getLastModifiedTime(entry, NOFOLLOW_LINKS).toInstant();
                     entries.put(entry.getFileName(), new CacheEntry(lastModified, tickCount));
                 }
             } catch (DirectoryIteratorException e) {
@@ -361,10 +362,9 @@ class PollingWatchService
             // iterate over all entries in directory
             try {
                 for (Path entry: stream) {
-                    long lastModified = 0L;
+                    Instant lastModified;
                     try {
-                        lastModified =
-                            Files.getLastModifiedTime(entry, LinkOption.NOFOLLOW_LINKS).toMillis();
+                        lastModified = Files.getLastModifiedTime(entry, NOFOLLOW_LINKS).toInstant();
                     } catch (IOException x) {
                         // unable to get attributes of entry. If file has just
                         // been deleted then we'll report it as deleted on the
@@ -376,8 +376,7 @@ class PollingWatchService
                     CacheEntry e = entries.get(entry.getFileName());
                     if (e == null) {
                         // new file found
-                        entries.put(entry.getFileName(),
-                                     new CacheEntry(lastModified, tickCount));
+                        entries.put(entry.getFileName(), new CacheEntry(lastModified, tickCount));
 
                         // queue ENTRY_CREATE if event enabled
                         if (events.contains(StandardWatchEventKinds.ENTRY_CREATE)) {
@@ -396,7 +395,7 @@ class PollingWatchService
                     }
 
                     // check if file has changed
-                    if (e.lastModified != lastModified) {
+                    if (!e.lastModified().equals(lastModified)) {
                         if (events.contains(StandardWatchEventKinds.ENTRY_MODIFY)) {
                             signalEvent(StandardWatchEventKinds.ENTRY_MODIFY,
                                         entry.getFileName());
