@@ -299,14 +299,8 @@ class MacroAssembler: public Assembler {
   void clobber_nonvolatile_registers() NOT_DEBUG_RETURN;
   void clobber_carg_stack_slots(Register tmp);
 
-  int  save_nonvolatile_registers_size(bool include_fp_regs, bool include_vector_regs) {
-    int size = (32 - 14) * 8; // GP regs
-    if (include_fp_regs) size += (32 - 14) * 8;
-    if (include_vector_regs) size += (32 - 20) * 16;
-    return size;
-  }
-  void save_nonvolatile_registers(   Register dst_base, int offset, bool include_fp_regs, bool include_vector_regs);
-  void restore_nonvolatile_registers(Register src_base, int offset, bool include_fp_regs, bool include_vector_regs);
+  void save_nonvolatile_gprs(   Register dst_base, int offset);
+  void restore_nonvolatile_gprs(Register src_base, int offset);
 
   enum {
     num_volatile_gp_regs = 11,
@@ -339,6 +333,10 @@ class MacroAssembler: public Assembler {
 
   // Push a frame of size `bytes' plus native_abi_reg_args on top.
   void push_frame_reg_args(unsigned int bytes, Register tmp);
+
+  // Setup up a new C frame with a spill area for non-volatile GPRs and additional
+  // space for local variables
+  void push_frame_reg_args_nonvolatiles(unsigned int bytes, Register tmp);
 
   // pop current C frame
   void pop_frame();
