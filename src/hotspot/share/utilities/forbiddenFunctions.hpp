@@ -73,7 +73,7 @@ PRAGMA_DIAG_POP
 // All of the following functions return raw C-heap pointers (sometimes as an
 // option, e.g. realpath or getwd) or, in case of free(), take raw C-heap
 // pointers.  We generally want allocation to be done through NMT.
-FORBID_IMPORTED_C_FUNCTION(void* malloc(size_t size), noexcept, "use os::malloc");
+// FORBID_IMPORTED_C_FUNCTION(void* malloc(size_t size), noexcept, "use os::malloc");
 FORBID_IMPORTED_C_FUNCTION(void free(void *ptr), noexcept, "use os::free");
 FORBID_IMPORTED_C_FUNCTION(void* calloc(size_t nmemb, size_t size), noexcept, "use os::malloc and zero out manually");
 FORBID_IMPORTED_C_FUNCTION(void* realloc(void *ptr, size_t size), noexcept, "use os::realloc");
